@@ -1,6 +1,7 @@
 package com.faraz.demo.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -11,15 +12,14 @@ public class Author {
     private String lastName;
     private String firstName;
     @ManyToMany(mappedBy = "authors")
-    private Set<Book> books;
+    private Set<Book> books = new HashSet<>();
 
     public Author(){
 
     }
-    public Author(String lastName, String firstName, Set<Book> books) {
+    public Author(String lastName, String firstName) {
         this.lastName = lastName;
         this.firstName = firstName;
-        this.books = books;
     }
 
     public long getId() {
