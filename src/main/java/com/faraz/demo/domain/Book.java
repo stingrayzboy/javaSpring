@@ -6,21 +6,33 @@ import java.util.Set;
 
 @Entity
 public class Book {
-    private String title;
-    private String isbn;
-    @ManyToMany
-    @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<Author> authors = new HashSet<>();
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    private String title;
+    private String isbn;
+
+    @ManyToMany
+    @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
+    private Set<Author> authors = new HashSet<>();
+
+    public Book() {
+    }
 
     public Book(String title, String isbn) {
         this.title = title;
         this.isbn = isbn;
     }
-    public Book(){
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -47,21 +59,13 @@ public class Book {
         this.authors = authors;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
     @Override
     public String toString() {
         return "Book{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", authors=" + authors +
-                ", id=" + id +
                 '}';
     }
 
@@ -72,11 +76,11 @@ public class Book {
 
         Book book = (Book) o;
 
-        return id.equals(book.id);
+        return id != null ? id.equals(book.id) : book.id == null;
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id != null ? id.hashCode() : 0;
     }
 }

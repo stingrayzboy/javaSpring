@@ -6,36 +6,31 @@ import java.util.Set;
 
 @Entity
 public class Author {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private String lastName;
+    private Long id;
+
     private String firstName;
+    private String lastName;
+
     @ManyToMany(mappedBy = "authors")
     private Set<Book> books = new HashSet<>();
 
-    public Author(){
-
+    public Author() {
     }
-    public Author(String lastName, String firstName) {
-        this.lastName = lastName;
+
+    public Author(String firstName, String lastName) {
         this.firstName = firstName;
+        this.lastName = lastName;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getFirstName() {
@@ -44,6 +39,14 @@ public class Author {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Set<Book> getBooks() {
@@ -58,8 +61,8 @@ public class Author {
     public String toString() {
         return "Author{" +
                 "id=" + id +
-                ", lastName='" + lastName + '\'' +
                 ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", books=" + books +
                 '}';
     }
@@ -71,11 +74,11 @@ public class Author {
 
         Author author = (Author) o;
 
-        return id == author.id;
+        return id != null ? id.equals(author.id) : author.id == null;
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        return id != null ? id.hashCode() : 0;
     }
 }
