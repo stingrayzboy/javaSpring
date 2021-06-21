@@ -2,8 +2,10 @@ package com.faraz.demo.bootstrap;
 
 import com.faraz.demo.domain.Author;
 import com.faraz.demo.domain.Book;
+import com.faraz.demo.domain.Publisher;
 import com.faraz.demo.repositories.AuthorRepository;
 import com.faraz.demo.repositories.BookRepository;
+import com.faraz.demo.repositories.PublisherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +14,12 @@ public class BootStrapData implements CommandLineRunner {
 
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
+    private final PublisherRepository publisherRepository;
 
-    public BootStrapData(AuthorRepository authorRepository, BookRepository bookRepository) {
+    public BootStrapData(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
     }
 
     @Override
@@ -37,7 +41,10 @@ public class BootStrapData implements CommandLineRunner {
         authorRepository.save(rod);
         bookRepository.save(noEJB);
 
+        Publisher pub = new Publisher("Boom","Pune me rehta mein!!","Pune","Maharashtra","410105");
+        publisherRepository.save(pub);
         System.out.println("Started in Bootstrap");
         System.out.println("Number of Books: " + bookRepository.count());
+        System.out.println("NUmber of publishers "+ publisherRepository.count());
     }
 }
